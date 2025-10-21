@@ -47,7 +47,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-add-to-cart-${product.id}">
             <img src="images/icons/checkmark.png" />
             Added
           </div>
@@ -59,8 +59,11 @@ products.forEach((product) => {
   `;
 
   document.querySelector(".js-products-grid").innerHTML = productsHtml;
+  let value;
+
   //interact add to cart button
   document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
+    //lintener add to loop button
     button.addEventListener("click", () => {
       // get product-id from buttton with data set value
       // get cart quantity with product id
@@ -68,7 +71,17 @@ products.forEach((product) => {
       const quantity = Number(
         document.querySelector(`.js-quantity-selector-${productId}`).value
       );
+      //show added visible with 2s with setTimeOut
 
+      const addedMessage = document.querySelector(
+        `.js-add-to-cart-${productId}`
+      );
+      clearTimeout(value);
+
+      addedMessage.classList.add("added-to-cart-show");
+      value = setTimeout(() => {
+        addedMessage.classList.remove("added-to-cart-show");
+      }, 2000);
       let exitingObj;
       //check alreday exist in the cart or not
       carts.forEach((cart) => {
