@@ -31,7 +31,7 @@ products.forEach((product) => {
           )}</div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -63,7 +63,11 @@ products.forEach((product) => {
   document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
     button.addEventListener("click", () => {
       // get product-id from buttton with data set value
+      // get cart quantity with product id
       const productId = button.dataset.productId;
+      const cartQuantityValue = Number(
+        document.querySelector(`.js-quantity-selector-${productId}`).value
+      );
 
       let exitingObj;
       //check alreday exist in the cart or not
@@ -72,11 +76,13 @@ products.forEach((product) => {
           exitingObj = cart;
         }
       });
+
       // add quantity if already in the cart and if not push to the carts
+      // cart quantity with cartQuantity
       if (exitingObj) {
-        exitingObj.quantity++;
+        exitingObj.quantity += cartQuantityValue;
       } else {
-        carts.push({ id: productId, quantity: 1 });
+        carts.push({ id: productId, quantity: cartQuantityValue });
       }
       // calcualte and  update cart quatity to the dom
       let cartQuantity = 0;
