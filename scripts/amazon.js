@@ -64,15 +64,15 @@ products.forEach((product) => {
     button.addEventListener("click", () => {
       // get product-id from buttton with data set value
       // get cart quantity with product id
-      const productId = button.dataset.productId;
-      const cartQuantityValue = Number(
+      const { productId } = button.dataset;
+      const quantity = Number(
         document.querySelector(`.js-quantity-selector-${productId}`).value
       );
 
       let exitingObj;
       //check alreday exist in the cart or not
       carts.forEach((cart) => {
-        if (productId === cart.id) {
+        if (productId === cart.productId) {
           exitingObj = cart;
         }
       });
@@ -80,9 +80,9 @@ products.forEach((product) => {
       // add quantity if already in the cart and if not push to the carts
       // cart quantity with cartQuantity
       if (exitingObj) {
-        exitingObj.quantity += cartQuantityValue;
+        exitingObj.quantity += quantity;
       } else {
-        carts.push({ id: productId, quantity: cartQuantityValue });
+        carts.push({ productId, quantity });
       }
       // calcualte and  update cart quatity to the dom
       let cartQuantity = 0;
