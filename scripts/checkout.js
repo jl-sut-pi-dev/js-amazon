@@ -1,5 +1,5 @@
 import { products } from "../data/products.js";
-import { cart } from "../data/cart.js";
+import { cart, deleteFromCart } from "../data/cart.js";
 
 let htmlStr = `
    `;
@@ -89,7 +89,7 @@ document.querySelector(".js-order-summary").innerHTML = htmlStr;
 document.querySelectorAll(".js-delete-quantity-link").forEach((deleteLink) => {
   deleteLink.addEventListener("click", () => {
     const { productId } = deleteLink.dataset;
-
+    deleteFromCart(productId);
     document.querySelector(`.js-cart-item-container-${productId}`).remove();
   });
 });
