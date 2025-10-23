@@ -1,3 +1,6 @@
+import { products } from "../data/products.js";
+import { cart } from "../data/cart.js";
+
 let productsHtml = "";
 
 // get data from products.js and show the data
@@ -84,9 +87,9 @@ products.forEach((product) => {
       }, 2000);
       let exitingObj;
       //check alreday exist in the cart or not
-      carts.forEach((cart) => {
-        if (productId === cart.productId) {
-          exitingObj = cart;
+      cart.forEach((cartItem) => {
+        if (productId === cartItem.productId) {
+          exitingObj = cartItem;
         }
       });
 
@@ -95,14 +98,15 @@ products.forEach((product) => {
       if (exitingObj) {
         exitingObj.quantity += quantity;
       } else {
-        carts.push({ productId, quantity });
+        cart.push({ productId, quantity });
       }
       // calcualte and  update cart quatity to the dom
       let cartQuantity = 0;
 
-      carts.forEach((cart) => {
-        cartQuantity += cart.quantity;
+      cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
       });
+      console.log(cart);
       document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
     });
   });
