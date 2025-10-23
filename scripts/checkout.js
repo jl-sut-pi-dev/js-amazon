@@ -1,10 +1,15 @@
 import { products } from "../data/products.js";
 import { cart, deleteFromCart } from "../data/cart.js";
-
+import { showMoney } from "./utils/money.js";
+import { showCalculateCartItem } from "./utils/cart-quantity.js";
+const checkoutHeaderQuantity = document.querySelector(
+  ".js-checkout-header-quantity"
+);
 let htmlStr = `
    `;
 
 console.log(cart);
+showCalculateCartItem(checkoutHeaderQuantity, cart);
 
 // loop cart and show in checkout
 cart.forEach((cartItem) => {
@@ -14,9 +19,12 @@ cart.forEach((cartItem) => {
       cartItemProduct = prodcut;
     }
   });
+  console.log(cartItem);
 
   htmlStr += `
-   <div class="cart-item-container js-cart-item-container-${cartItemProduct.id}">
+   <div class="cart-item-container js-cart-item-container-${
+     cartItemProduct.id
+   }">
         <div class="delivery-date">Delivery date: Tuesday, June 21</div>
 
         <div class="cart-item-details-grid">
@@ -29,13 +37,19 @@ cart.forEach((cartItem) => {
             <div class="product-name">
             ${cartItemProduct.name}
             </div>
-            <div class="product-price">$10.90</div>
+            <div class="product-price">$${showMoney(
+              cartItemProduct.priceCents
+            )}</div>
             <div class="product-quantity">
-              <span> Quantity: <span class="quantity-label">2</span> </span>
+              <span> Quantity: <span class="quantity-label">${
+                cartItem.quantity
+              }</span> </span>
               <span class="update-quantity-link link-primary">
                 Update
               </span>
-              <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${cartItemProduct.id}">
+              <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${
+                cartItemProduct.id
+              }">
                 Delete
               </span>
             </div>
@@ -50,7 +64,7 @@ cart.forEach((cartItem) => {
                 type="radio"
                 checked
                 class="delivery-option-input"
-                name="delivery-option-1"
+                name="delivery-option-${cartItemProduct.id}"
               />
               <div>
                 <div class="delivery-option-date">Tuesday, June 21</div>
@@ -61,7 +75,7 @@ cart.forEach((cartItem) => {
               <input
                 type="radio"
                 class="delivery-option-input"
-                name="delivery-option-1"
+                name="delivery-option-${cartItemProduct.id}"
               />
               <div>
                 <div class="delivery-option-date">Wednesday, June 15</div>
@@ -72,7 +86,7 @@ cart.forEach((cartItem) => {
               <input
                 type="radio"
                 class="delivery-option-input"
-                name="delivery-option-1"
+                name="delivery-option-${cartItemProduct.id}"
               />
               <div>
                 <div class="delivery-option-date">Monday, June 13</div>
@@ -84,12 +98,14 @@ cart.forEach((cartItem) => {
     </div>
   `;
 });
+
 document.querySelector(".js-order-summary").innerHTML = htmlStr;
 
 document.querySelectorAll(".js-delete-quantity-link").forEach((deleteLink) => {
   deleteLink.addEventListener("click", () => {
     const { productId } = deleteLink.dataset;
     deleteFromCart(productId);
+    showCalculateCartItem(checkoutHeaderQuantity, cart);
     document.querySelector(`.js-cart-item-container-${productId}`).remove();
   });
 });

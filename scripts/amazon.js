@@ -1,11 +1,14 @@
 import { products } from "../data/products.js";
 import { addToCart, cart } from "../data/cart.js";
+import { showMoney } from "./utils/money.js";
+import { showCalculateCartItem } from "./utils/cart-quantity.js";
+const cartQuantityElement = document.querySelector(".js-cart-quantity");
+console.log(cartQuantityElement);
 let productsHtml = "";
 
 // get data from products.js and show the data
 // set the data to js-products-grid dom element
-
-calcualteCartQuantity();
+showCalculateCartItem(cartQuantityElement, cart);
 
 products.forEach((product) => {
   productsHtml += `
@@ -31,9 +34,7 @@ products.forEach((product) => {
             }</div>
           </div>
 
-          <div class="product-price">$${(product.priceCents / 100).toFixed(
-            2
-          )}</div>
+          <div class="product-price">$${showMoney(product.priceCents)}</div>
 
           <div class="product-quantity-container">
             <select class="js-quantity-selector-${product.id}">
@@ -77,24 +78,15 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
     const quantity = Number(
       document.querySelector(`.js-quantity-selector-${productId}`).value
     );
-    // added message show
-    addedMessageFun(productId);
     //add to cart
     addToCart(productId, quantity);
+    // added message show
+    addedMessageFun(productId);
+
     // calcualte and  update cart quatity to the dom
-    calcualteCartQuantity();
+    showCalculateCartItem(cartQuantityElement, cart);
   });
 });
-
-function calcualteCartQuantity() {
-  let cartQuantity = 0;
-
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
-  console.log(cart);
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-}
 
 // added message show button
 function addedMessageFun(productId) {

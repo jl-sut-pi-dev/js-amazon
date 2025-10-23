@@ -29,6 +29,5 @@ export function deleteFromCart(productId) {
   );
 
   cart = filteredCart;
-  console.log(cart);
   saveToLocalStorage();
 }
