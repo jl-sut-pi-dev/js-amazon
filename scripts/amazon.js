@@ -1,9 +1,9 @@
 import { products } from "../data/products.js";
 import { addToCart, cart } from "../data/cart.js";
 import { showMoney } from "./utils/money.js";
-import { showCalculateCartItem } from "./utils/cart-quantity.js";
+import { showCalculateCartItem } from "../data/cart.js";
+
 const cartQuantityElement = document.querySelector(".js-cart-quantity");
-console.log(cartQuantityElement);
 let productsHtml = "";
 
 // get data from products.js and show the data

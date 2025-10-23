@@ -31,3 +31,21 @@ export function deleteFromCart(productId) {
   cart = filteredCart;
   saveToLocalStorage();
 }
+export function showCalculateCartItem(element, cart) {
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  element.innerHTML = cartQuantity;
+}
+export function updateCartQuantity(productId, newQuantity, element) {
+  let cartToUpdate;
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      cartToUpdate = cartItem;
+    }
+  });
+  cartToUpdate.quantity = newQuantity;
+  showCalculateCartItem(element, cart);
+  saveToLocalStorage();
+}

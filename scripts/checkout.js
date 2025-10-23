@@ -1,25 +1,25 @@
 import { products } from "../data/products.js";
-import { cart, deleteFromCart } from "../data/cart.js";
+import { cart, deleteFromCart, updateCartQuantity } from "../data/cart.js";
 import { showMoney } from "./utils/money.js";
-import { showCalculateCartItem } from "./utils/cart-quantity.js";
+import { showCalculateCartItem } from "../data/cart.js";
+// document.querySelector(".js-quantity-input");
+
 const checkoutHeaderQuantity = document.querySelector(
   ".js-checkout-header-quantity"
 );
 let htmlStr = `
    `;
 
-console.log(cart);
 showCalculateCartItem(checkoutHeaderQuantity, cart);
 
 // loop cart and show in checkout
 cart.forEach((cartItem) => {
   let cartItemProduct;
-  products.forEach((prodcut) => {
-    if (prodcut.id === cartItem.productId) {
-      cartItemProduct = prodcut;
+  products.forEach((product) => {
+    if (product.id === cartItem.productId) {
+      cartItemProduct = product;
     }
   });
-  console.log(cartItem);
 
   htmlStr += `
    <div class="cart-item-container js-cart-item-container-${
@@ -40,13 +40,23 @@ cart.forEach((cartItem) => {
             <div class="product-price">$${showMoney(
               cartItemProduct.priceCents
             )}</div>
-            <div class="product-quantity">
-              <span> Quantity: <span class="quantity-label">${
-                cartItem.quantity
-              }</span> </span>
-              <span class="update-quantity-link link-primary">
+            <div class="product-quantity ">
+              <span class="" > Quantity: <span class="quantity-label js-product-quantity-${
+                cartItemProduct.id
+              }">${cartItem.quantity}</span> </span>
+              <span  class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
+                cartItemProduct.id
+              }">
                 Update
               </span>
+            
+                <input  class="quantity-input js-quantity-input-${
+                  cartItemProduct.id
+                }">
+                <span  class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${
+                  cartItemProduct.id
+                }">save</span>
+           
               <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${
                 cartItemProduct.id
               }">
@@ -109,3 +119,55 @@ document.querySelectorAll(".js-delete-quantity-link").forEach((deleteLink) => {
     document.querySelector(`.js-cart-item-container-${productId}`).remove();
   });
 });
+
+document
+  .querySelectorAll(".js-update-quantity-link")
+  .forEach((updateButton) => {
+    updateButton.addEventListener("click", () => {
+      const { productId } = updateButton.dataset;
+
+      const inputValue = document.querySelector(
+        `.js-quantity-input-${productId}`
+      );
+
+      document
+        .querySelector(`.js-cart-item-container-${productId}`)
+        .classList.add("is-editing-quantity");
+
+      inputValue.addEventListener("keyup", function (event) {
+        // handle the keyup event
+        if (event.key === "Enter") {
+          inputValue.value;
+          updateCartQuantity(
+            productId,
+            Number(inputValue.value),
+            checkoutHeaderQuantity
+          );
+
+          showQuantityInDom(productId, inputValue.value);
+        }
+      });
+    });
+  });
+document
+  .querySelectorAll(".js-save-quantity-link")
+  .forEach((saveQuantityLink) => {
+    saveQuantityLink.addEventListener("click", () => {
+      const { productId } = saveQuantityLink.dataset;
+
+      const inputValue = Number(
+        document.querySelector(`.js-quantity-input-${productId}`).value
+      );
+
+      // let exitingObj;
+      updateCartQuantity(productId, inputValue, checkoutHeaderQuantity);
+      showQuantityInDom(productId, inputValue);
+    });
+  });
+function showQuantityInDom(productId, inputValue) {
+  document
+    .querySelector(`.js-cart-item-container-${productId}`)
+    .classList.remove("is-editing-quantity");
+  document.querySelector(`.js-product-quantity-${productId}`).innerHTML =
+    inputValue;
+}
