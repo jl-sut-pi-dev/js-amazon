@@ -4,7 +4,6 @@ import { getProduct } from "../../data/products.js";
 import { showMoney } from "../utils/money.js";
 
 export function renderPayMentSummary() {
-  console.log("pay ment summary");
   let productPriceCents = 0;
   let shippingPriceCents = 0;
   cart.forEach((cartItem) => {

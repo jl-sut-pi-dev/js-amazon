@@ -1,3 +1,3 @@
 export function showMoney(productPriceCents) {
-  return Math.round(productPriceCents / 100).toFixed(2);
+  return (Math.round(productPriceCents) / 100).toFixed(2);
 }
