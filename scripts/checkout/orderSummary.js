@@ -8,7 +8,6 @@ import {
 } from "../../data/cart.js";
 
 import { showMoney } from "../utils/money.js";
-import { showCalculateCartItem } from "../../data/cart.js";
 
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {
@@ -16,15 +15,11 @@ import {
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
 import { renderPayMentSummary } from "./paymentSummary.js";
+import { renderCheckoutHeader } from "./checkout-header.js";
 
 export function renderOrderSummary() {
-  const checkoutHeaderQuantity = document.querySelector(
-    ".js-checkout-header-quantity"
-  );
   let htmlStr = `
    `;
-
-  showCalculateCartItem(checkoutHeaderQuantity, cart);
 
   // loop cart and show in checkout
   cart.forEach((cartItem) => {
@@ -100,8 +95,7 @@ export function renderOrderSummary() {
       deleteLink.addEventListener("click", () => {
         const { productId } = deleteLink.dataset;
         deleteFromCart(productId);
-        showCalculateCartItem(checkoutHeaderQuantity, cart);
-        // document.querySelector(`.js-cart-item-container-${productId}`).remove();
+        renderCheckoutHeader();
         renderOrderSummary();
         renderPayMentSummary();
       });
@@ -125,11 +119,9 @@ export function renderOrderSummary() {
           // handle the keyup event
           if (event.key === "Enter") {
             inputValue.value;
-            updateCartQuantity(
-              productId,
-              Number(inputValue.value),
-              checkoutHeaderQuantity
-            );
+            updateCartQuantity(productId, Number(inputValue.value));
+            renderCheckoutHeader();
+            renderCheckoutHeader();
 
             showQuantityInDom(productId, inputValue.value);
           }
@@ -146,7 +138,8 @@ export function renderOrderSummary() {
           document.querySelector(`.js-quantity-input-${productId}`).value
         );
 
-        updateCartQuantity(productId, inputValue, checkoutHeaderQuantity);
+        updateCartQuantity(productId, inputValue);
+        renderCheckoutHeader();
         showQuantityInDom(productId, inputValue);
       });
     });

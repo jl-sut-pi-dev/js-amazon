@@ -49,7 +49,7 @@ export function showCalculateCartItem(element, cart) {
   });
   element.innerHTML = cartQuantity;
 }
-export function updateCartQuantity(productId, newQuantity, element) {
+export function updateCartQuantity(productId, newQuantity) {
   let cartToUpdate;
   cart.forEach((cartItem) => {
     if (cartItem.productId === productId) {
@@ -57,7 +57,6 @@ export function updateCartQuantity(productId, newQuantity, element) {
     }
   });
   cartToUpdate.quantity = newQuantity;
-  showCalculateCartItem(element, cart);
   saveToLocalStorage();
 }
 export function updateDeliveryOption(productId, deliveryOptionId) {
