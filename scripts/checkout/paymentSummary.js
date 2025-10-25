@@ -1,6 +1,7 @@
-import { cart, showCalculateCartItem } from "../../data/cart.js";
+import { cart } from "../../data/cart.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
+import { renderAmazonHeader } from "../amazon/amazon-header.js";
 import { showMoney } from "../utils/money.js";
 
 export function renderPayMentSummary() {
@@ -54,5 +55,6 @@ export function renderPayMentSummary() {
       </button>
 `;
   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
-  showCalculateCartItem(document.querySelector(".item-counts"), cart);
+  // showCalculateCartItem(document.querySelector(".item-counts"), cart);
+  renderAmazonHeader();
 }

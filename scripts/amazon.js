@@ -1,14 +1,16 @@
 import { products } from "../data/products.js";
 import { addToCart, cart } from "../data/cart.js";
 import { showMoney } from "./utils/money.js";
-import { showCalculateCartItem } from "../data/cart.js";
+// import { showCalculateCartItem } from "../data/cart.js";
+import { renderAmazonHeader } from "./amazon/amazon-header.js";
 
 const cartQuantityElement = document.querySelector(".js-cart-quantity");
 let productsHtml = "";
 
 // get data from products.js and show the data
 // set the data to js-products-grid dom element
-showCalculateCartItem(cartQuantityElement, cart);
+// showCalculateCartItem(cartQuantityElement, cart);
+renderAmazonHeader();
 
 products.forEach((product) => {
   productsHtml += `
