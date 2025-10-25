@@ -1,4 +1,4 @@
-import { getProduct, products } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
 
 import {
   cart,
@@ -11,6 +11,7 @@ import { showMoney } from "../utils/money.js";
 
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {
+  calculateDeliveryDate,
   deliveryOptions,
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
@@ -28,10 +29,8 @@ export function renderOrderSummary() {
 
     const { deliveryOptionId } = cartItem;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
+    const dateString = calculateDeliveryDate(deliveryOption);
 
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
-    const dateString = deliveryDate.format("dddd, MMMM D");
     htmlStr += `
    <div class="cart-item-container js-cart-item-container-${
      cartItemProduct.id
