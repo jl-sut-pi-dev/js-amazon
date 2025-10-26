@@ -14,6 +14,7 @@ import {
   calculateDeliveryDate,
   deliveryOptions,
   getDeliveryOption,
+  getDeliveryWeekday,
 } from "../../data/deliveryOptions.js";
 import { renderPayMentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout-header.js";
@@ -136,9 +137,8 @@ export function renderOrderSummary() {
   function deliveryOptionHtml(matchingProduct, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
-      const dateString = deliveryDate.format("dddd, MMMM D");
+      const dateString = getDeliveryWeekday(deliveryOption);
+
       const priceString =
         deliveryOption.priceCents === 0
           ? "FREE"

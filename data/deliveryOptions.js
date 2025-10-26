@@ -27,20 +27,24 @@ export function getDeliveryOption(deliveryOptionId) {
   return deliveryOption || deliveryOption[0];
 }
 export function calculateDeliveryDate(deliveryOption) {
-  const today = dayjs();
-  const newDeliveryDay = isWeekend(deliveryOption.deliveryDays);
-  const deliveryDate = today.add(newDeliveryDay, "d");
+  const newDeliveryDay = getDeliveryWeekday(deliveryOption);
 
-  return deliveryDate.format("dddd, MMMM D");
+  return newDeliveryDay;
 }
 
-function isWeekend(deliveryDays) {
-  const today = dayjs();
-  for (let i = 1; i <= deliveryDays; i++) {
-    const weekday = today.add(i, "d").format("dddd");
-    if (weekday === "Saturday" || weekday === "Sunday") {
-      deliveryDays++;
+export function getDeliveryWeekday(deliveryOption) {
+  let remainingDays = deliveryOption.deliveryDays;
+  let deliveryDate = dayjs();
+
+  while (remainingDays > 0) {
+    deliveryDate = deliveryDate.add(1, "day");
+    const weekday = deliveryDate.format("dddd");
+
+    // Only count weekdays (Mon–Fri)
+    if (weekday !== "Saturday" && weekday !== "Sunday") {
+      remainingDays--;
     }
   }
-  return deliveryDays;
+
+  return deliveryDate.format("dddd, MMMM D");
 }

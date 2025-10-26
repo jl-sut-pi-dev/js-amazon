@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { calculateCartItem, cart } from "../../data/cart.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { renderAmazonHeader } from "../amazon/amazon-header.js";
@@ -22,7 +22,9 @@ export function renderPayMentSummary() {
       </div>
 
       <div class="payment-summary-row">
-        <div>Items (<span class="item-counts" ></span>):</div>
+        <div>Items (<span class="item-counts" >${calculateCartItem(
+          cart
+        )}</span>):</div>
         <div class="payment-summary-money">$${showMoney(
           productPriceCents
         )}</div>
