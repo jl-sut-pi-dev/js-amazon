@@ -1,4 +1,4 @@
-import { showMoney } from "../scripts/utils/money.js";
+import { showMoney } from "../../scripts/utils/money.js";
 
 describe("test suite : Format currency", () => {
   it("convert cents into dollars", () => {
