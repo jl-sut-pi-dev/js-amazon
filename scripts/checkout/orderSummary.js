@@ -51,9 +51,11 @@ export function renderOrderSummary() {
               cartItemProduct.priceCents
             )}</div>
             <div class="product-quantity ">
-              <span class="" > Quantity: <span class="quantity-label js-product-quantity-${
-                cartItemProduct.id
-              }">${cartItem.quantity}</span> </span>
+              <span >
+                Quantity: <span class="quantity-label js-product-quantity-${
+                  cartItemProduct.id
+                }">${cartItem.quantity}</span>
+              </span>
               <span  class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
                 cartItemProduct.id
               }">
@@ -106,25 +108,9 @@ export function renderOrderSummary() {
       updateButton.addEventListener("click", () => {
         const { productId } = updateButton.dataset;
 
-        const inputValue = document.querySelector(
-          `.js-quantity-input-${productId}`
-        );
-
         document
           .querySelector(`.js-cart-item-container-${productId}`)
           .classList.add("is-editing-quantity");
-
-        inputValue.addEventListener("keyup", function (event) {
-          // handle the keyup event
-          if (event.key === "Enter") {
-            inputValue.value;
-            updateCartQuantity(productId, Number(inputValue.value));
-            renderCheckoutHeader();
-            renderCheckoutHeader();
-
-            showQuantityInDom(productId, inputValue.value);
-          }
-        });
       });
     });
   document
@@ -132,6 +118,9 @@ export function renderOrderSummary() {
     .forEach((saveQuantityLink) => {
       saveQuantityLink.addEventListener("click", () => {
         const { productId } = saveQuantityLink.dataset;
+        document
+          .querySelector(`.js-cart-item-container-${productId}`)
+          .classList.remove("is-editing-quantity");
 
         const inputValue = Number(
           document.querySelector(`.js-quantity-input-${productId}`).value
@@ -139,16 +128,10 @@ export function renderOrderSummary() {
 
         updateCartQuantity(productId, inputValue);
         renderCheckoutHeader();
-        showQuantityInDom(productId, inputValue);
+        renderOrderSummary();
+        renderPayMentSummary();
       });
     });
-  function showQuantityInDom(productId, inputValue) {
-    document
-      .querySelector(`.js-cart-item-container-${productId}`)
-      .classList.remove("is-editing-quantity");
-    document.querySelector(`.js-product-quantity-${productId}`).innerHTML =
-      inputValue;
-  }
 
   function deliveryOptionHtml(matchingProduct, cartItem) {
     let html = "";
