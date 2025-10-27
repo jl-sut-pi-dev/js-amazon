@@ -7,9 +7,8 @@ import {
   updateDeliveryOption,
 } from "../../data/cart.js";
 
-import { showMoney } from "../utils/money.js";
+import { formatCurrency } from "../utils/money.js";
 
-import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {
   calculateDeliveryDate,
   deliveryOptions,
@@ -33,7 +32,7 @@ export function renderOrderSummary() {
     const dateString = calculateDeliveryDate(deliveryOption);
 
     htmlStr += `
-   <div class="cart-item-container js-cart-item-container-${
+   <div class="cart-item-container js-cart-item-container js-cart-item-container-${
      cartItemProduct.id
    }">
         <div class="delivery-date">Delivery date: ${dateString}</div>
@@ -48,10 +47,12 @@ export function renderOrderSummary() {
             <div class="product-name">
             ${cartItemProduct.name}
             </div>
-            <div class="product-price">$${showMoney(
+            <div class="product-price">$${formatCurrency(
               cartItemProduct.priceCents
             )}</div>
-            <div class="product-quantity ">
+            <div class="product-quantity js-product-quantity-${
+              cartItemProduct.id
+            }">
               <span >
                 Quantity: <span class="quantity-label js-product-quantity-${
                   cartItemProduct.id
@@ -70,9 +71,9 @@ export function renderOrderSummary() {
                   cartItemProduct.id
                 }">save</span>
            
-              <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${
+              <span class="delete-quantity-link link-primary js-delete-quantity-link js-delete-link-${
                 cartItemProduct.id
-              }">
+              }" data-product-id="${cartItemProduct.id}">
                 Delete
               </span>
             </div>
@@ -142,7 +143,7 @@ export function renderOrderSummary() {
       const priceString =
         deliveryOption.priceCents === 0
           ? "FREE"
-          : ` $${showMoney(deliveryOption.priceCents)} -`;
+          : ` $${formatCurrency(deliveryOption.priceCents)} -`;
 
       const isCheked = deliveryOption.id === cartItem.deliveryOptionId;
       html += `

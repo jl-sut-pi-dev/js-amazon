@@ -2,7 +2,7 @@ import { calculateCartItem, cart } from "../../data/cart.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { renderAmazonHeader } from "../amazon/amazon-header.js";
-import { showMoney } from "../utils/money.js";
+import { formatCurrency } from "../utils/money.js";
 
 export function renderPayMentSummary() {
   let productPriceCents = 0;
@@ -25,31 +25,33 @@ export function renderPayMentSummary() {
         <div>Items (<span class="item-counts" >${calculateCartItem(
           cart
         )}</span>):</div>
-        <div class="payment-summary-money">$${showMoney(
+        <div class="payment-summary-money">$${formatCurrency(
           productPriceCents
         )}</div>
       </div>
 
       <div class="payment-summary-row">
         <div>Shipping &amp; handling:</div>
-        <div class="payment-summary-money">$${showMoney(
+        <div class="payment-summary-money">$${formatCurrency(
           shippingPriceCents
         )}</div>
       </div>
 
       <div class="payment-summary-row subtotal-row">
         <div>Total before tax:</div>
-        <div class="payment-summary-money">$${showMoney(totalBeforeTax)}</div>
+        <div class="payment-summary-money">$${formatCurrency(
+          totalBeforeTax
+        )}</div>
       </div>
 
       <div class="payment-summary-row">
         <div>Estimated tax (10%):</div>
-        <div class="payment-summary-money">$${showMoney(taxCents)}</div>
+        <div class="payment-summary-money">$${formatCurrency(taxCents)}</div>
       </div>
 
       <div class="payment-summary-row total-row">
         <div>Order total:</div>
-        <div class="payment-summary-money">$${showMoney(totalCents)}</div>
+        <div class="payment-summary-money">$${formatCurrency(totalCents)}</div>
       </div>
 
       <button class="place-order-button button-primary">

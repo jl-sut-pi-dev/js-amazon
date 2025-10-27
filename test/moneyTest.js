@@ -1,10 +1,10 @@
-import { showMoney } from "../scripts/utils/money.js";
+import { formatCurrency } from "../scripts/utils/money.js";
 
 // when we test the code , we group the test code <=> test suite( the naming covension of gruop of test code)
-console.log("test suite : showMoeny");
+console.log("test suite : formatCurrency");
 console.log("convert cent into dollar");
-console.log(showMoney(2095));
-if (showMoney(2095) === "20.95") {
+console.log(formatCurrency(2095));
+if (formatCurrency(2095) === "20.95") {
   console.log("passed");
 } else {
   console.log("failed");
@@ -12,7 +12,7 @@ if (showMoney(2095) === "20.95") {
 
 console.log("round up to nearest num ");
 
-if (showMoney(2000.5) === "20.01") {
+if (formatCurrency(2000.5) === "20.01") {
   console.log("passed");
 } else {
   console.log("failed");
@@ -20,7 +20,7 @@ if (showMoney(2000.5) === "20.01") {
 
 console.log("work wtih 0");
 
-if (showMoney(0) === "0.00") {
+if (formatCurrency(0) === "0.00") {
   console.log("passed");
 } else {
   console.log("failed");
@@ -28,7 +28,7 @@ if (showMoney(0) === "0.00") {
 
 console.log("round down into nearest num ");
 
-if (showMoney(2000.4) === "20.00") {
+if (formatCurrency(2000.4) === "20.00") {
   console.log("passed");
 } else {
   console.log("failed");

@@ -1,6 +1,6 @@
 import { products } from "../data/products.js";
 import { addToCart } from "../data/cart.js";
-import { showMoney } from "./utils/money.js";
+import { formatCurrency } from "./utils/money.js";
 // import { showCalculateCartItem } from "../data/cart.js";
 import { renderAmazonHeader } from "./amazon/amazon-header.js";
 
@@ -36,7 +36,9 @@ products.forEach((product) => {
             }</div>
           </div>
 
-          <div class="product-price">$${showMoney(product.priceCents)}</div>
+          <div class="product-price">$${formatCurrency(
+            product.priceCents
+          )}</div>
 
           <div class="product-quantity-container">
             <select class="js-quantity-selector-${product.id}">

@@ -1,3 +1,3 @@
-export function showMoney(productPriceCents) {
+export function formatCurrency(productPriceCents) {
   return (Math.round(productPriceCents) / 100).toFixed(2);
 }
