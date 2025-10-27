@@ -7,10 +7,15 @@ describe("test suite : Format currency", () => {
   it("work with 0", () => {
     expect(formatCurrency(0)).toEqual("0.00");
   });
-  it("rounds up to the nearest cent", () => {
-    expect(formatCurrency(2000.5)).toEqual("20.01");
+  describe("rounding", () => {
+    it("rounds up to the nearest cent", () => {
+      expect(formatCurrency(2000.5)).toEqual("20.01");
+    });
+    it("rounds down to the nearest cent", () => {
+      expect(formatCurrency(2000.4)).toEqual("20.00");
+    });
   });
-  it("rounds down to the nearest cent", () => {
-    expect(formatCurrency(2000.4)).toEqual("20.00");
+  it("negative number test", () => {
+    expect(formatCurrency(-2300)).toEqual("-23.00");
   });
 });

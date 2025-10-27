@@ -44,12 +44,12 @@ export function renderOrderSummary() {
           />
 
           <div class="cart-item-details">
-            <div class="product-name">
+            <div class="product-name js-product-name-${cartItemProduct.id}">
             ${cartItemProduct.name}
             </div>
-            <div class="product-price">$${formatCurrency(
-              cartItemProduct.priceCents
-            )}</div>
+            <div class="product-price js-product-price-${
+              cartItemProduct.id
+            }">$${formatCurrency(cartItemProduct.priceCents)}</div>
             <div class="product-quantity js-product-quantity-${
               cartItemProduct.id
             }">
@@ -158,7 +158,7 @@ export function renderOrderSummary() {
        />
       <div>
         <div class="delivery-option-date">${dateString}</div>
-        <div class="delivery-option-price">${priceString} Shipping</div>
+        <div class="delivery-option-price ">${priceString} Shipping</div>
       </div>
     </div>
   `;
