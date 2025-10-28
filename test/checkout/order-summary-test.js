@@ -1,5 +1,9 @@
 // import {renderOrderSum}
-import { loadFromStorage, cart } from "../../data/cart.js";
+import {
+  loadFromStorage,
+  cart,
+  updateDeliveryOption,
+} from "../../data/cart.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 // integration test (test many units/pieces of code working together)
@@ -72,5 +76,34 @@ describe("test suite : render order summary", () => {
     ).not.toEqual(null);
     expect(cart.length).toEqual(1);
     expect(cart[0].productId).toEqual(productId2);
+  });
+  it("update delivery option", () => {
+    document.querySelector(`.js-delivery-option-${productId1}-2`).click();
+    expect(
+      document.querySelector(`.js-delivery-option-input-${productId1}-2`)
+        .checked
+    ).toEqual(true);
+
+    expect(cart.length).toEqual(2);
+    expect(cart[0].productId).toEqual(productId1);
+    expect(cart[0].deliveryOptionId).toEqual("2");
+
+    expect(
+      document.querySelector(".js-payment-summary-shipping").innerText
+    ).toEqual("$4.77");
+    expect(
+      document.querySelector(".js-payment-summary-total").innerText
+    ).toEqual("$52.51");
+  });
+  it("does noting if delivery option does not exist", () => {
+    updateDeliveryOption(
+      "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      "does-not-exist"
+    );
+    expect(cart.length).toEqual(2);
+    expect(cart[0].productId).toEqual("e43638ce-6aa0-4b85-b27f-e1d07eb678c6");
+    expect(cart[0].quantity).toEqual(2);
+    expect(cart[0].deliveryOptionId).toEqual("1");
+    expect(localStorage.setItem).toHaveBeenCalledTimes(0);
   });
 });

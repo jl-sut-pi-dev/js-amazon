@@ -1,3 +1,5 @@
+import { validDeliveryOption } from "./deliveryOptions.js";
+
 export let cart;
 loadFromStorage();
 function saveToLocalStorage() {
@@ -44,11 +46,18 @@ export function updateCartQuantity(productId, newQuantity) {
 }
 export function updateDeliveryOption(productId, deliveryOptionId) {
   let filteredCart;
+  const valid = validDeliveryOption(deliveryOptionId);
+  if (!valid) {
+    return;
+  }
   cart.forEach((cartItem) => {
     if (cartItem.productId === productId) {
       filteredCart = cartItem;
     }
   });
+  if (!filteredCart) {
+    return;
+  }
 
   filteredCart.deliveryOptionId = deliveryOptionId;
   saveToLocalStorage();
