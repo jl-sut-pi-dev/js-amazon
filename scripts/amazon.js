@@ -1,17 +1,17 @@
 import { cart } from "../data/cart-calss.js";
-import { products } from "../data/products.js";
+import { products, loadsProducts } from "../data/products.js";
 import { renderAmazonHeader } from "./amazon/amazon-header.js";
 
-// const cartQuantityElement = document.querySelector(".js-cart-quantity");
-let productsHtml = "";
+function renderProductGrid() {
+  // const cartQuantityElement = document.querySelector(".js-cart-quantity");
+  let productsHtml = "";
+  // get data from products.js and show the data
+  // set the data to js-products-grid dom element
+  // showCalculateCartItem(cartQuantityElement, cart);
+  renderAmazonHeader();
 
-// get data from products.js and show the data
-// set the data to js-products-grid dom element
-// showCalculateCartItem(cartQuantityElement, cart);
-renderAmazonHeader();
-
-products.forEach((product) => {
-  productsHtml += `
+  products.forEach((product) => {
+    productsHtml += `
         <div class="product-container">
           <div class="product-image-container">
             <img
@@ -63,42 +63,44 @@ products.forEach((product) => {
           }" >Add to Cart</button>
         </div>
   `;
-});
-
-document.querySelector(".js-products-grid").innerHTML = productsHtml;
-let addedMessageTimeOut = {};
-
-//interact add to cart button
-document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
-  //lintener add to loop button
-  button.addEventListener("click", () => {
-    // get product-id from buttton with data set value
-    // get cart quantity with product id
-    const { productId } = button.dataset;
-    const quantity = Number(
-      document.querySelector(`.js-quantity-selector-${productId}`).value
-    );
-    //add to cart
-    // addToCart(productId, quantity);
-    cart.addToCart(productId, quantity);
-    // added message show
-    addedMessageFun(productId);
-
-    // calcualte and  update cart quatity to the dom
-    // showCalculateCartItem(cartQuantityElement, cart);
-    renderAmazonHeader();
   });
-});
 
-// added message show button
-function addedMessageFun(productId) {
-  //show added visible with 2s with setTimeOut
+  document.querySelector(".js-products-grid").innerHTML = productsHtml;
+  let addedMessageTimeOut = {};
 
-  const addedMessage = document.querySelector(`.js-add-to-cart-${productId}`);
-  clearTimeout(addedMessageTimeOut[productId]);
+  //interact add to cart button
+  document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
+    //lintener add to loop button
+    button.addEventListener("click", () => {
+      // get product-id from buttton with data set value
+      // get cart quantity with product id
+      const { productId } = button.dataset;
+      const quantity = Number(
+        document.querySelector(`.js-quantity-selector-${productId}`).value
+      );
+      //add to cart
+      // addToCart(productId, quantity);
+      cart.addToCart(productId, quantity);
+      // added message show
+      addedMessageFun(productId);
 
-  addedMessage.classList.add("added-to-cart-show");
-  addedMessageTimeOut[productId] = setTimeout(() => {
-    addedMessage.classList.remove(`added-to-cart-show`);
-  }, 2000);
+      // calcualte and  update cart quatity to the dom
+      // showCalculateCartItem(cartQuantityElement, cart);
+      renderAmazonHeader();
+    });
+  });
+
+  // added message show button
+  function addedMessageFun(productId) {
+    //show added visible with 2s with setTimeOut
+
+    const addedMessage = document.querySelector(`.js-add-to-cart-${productId}`);
+    clearTimeout(addedMessageTimeOut[productId]);
+
+    addedMessage.classList.add("added-to-cart-show");
+    addedMessageTimeOut[productId] = setTimeout(() => {
+      addedMessage.classList.remove(`added-to-cart-show`);
+    }, 2000);
+  }
 }
+loadsProducts(renderProductGrid);
