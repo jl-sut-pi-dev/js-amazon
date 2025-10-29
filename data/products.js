@@ -24,7 +24,21 @@ class Product {
     return ``;
   }
 }
-
+class Appliance extends Product {
+  instructionsLink;
+  warrantyLink;
+  constructor(productDetail) {
+    super(productDetail);
+    this.instructionsLink = productDetail.instructionsLink;
+    this.warrantyLink = productDetail.warrantyLink;
+  }
+  extraInfo() {
+    return `
+    <a href="${this.instructionsLink}" targer="_blank">Instructions</a>
+    <a href="${this.warrantyLink}" targer="_blank">Warranty</a>
+    `;
+  }
+}
 class Clothing extends Product {
   sizeChartLink;
   constructor(productDetail) {
@@ -86,6 +100,9 @@ export const products = [
     },
     priceCents: 1899,
     keywords: ["toaster", "kitchen", "appliances"],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -108,6 +125,9 @@ export const products = [
     },
     priceCents: 3499,
     keywords: ["kitchen", "cookware"],
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
   },
   {
     id: "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -219,6 +239,9 @@ export const products = [
       count: 846,
     },
     priceCents: 3074,
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
     keywords: ["water boiler", "appliances", "kitchen"],
   },
   {
@@ -432,6 +455,9 @@ export const products = [
       count: 1211,
     },
     priceCents: 2250,
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
     keywords: ["coffeemakers", "kitchen", "appliances"],
   },
   {
@@ -476,6 +502,9 @@ export const products = [
       count: 3,
     },
     priceCents: 10747,
+    type: "appliance",
+    instructionsLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
     keywords: ["food blenders", "kitchen", "appliances"],
   },
   {
@@ -512,7 +541,9 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productDetail) => {
-  if (productDetail.type === "clothing") {
+  if (productDetail.type === "appliance") {
+    return new Appliance(productDetail);
+  } else if (productDetail.type === "clothing") {
     return new Clothing(productDetail);
   }
   return new Product(productDetail);
