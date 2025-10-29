@@ -184,5 +184,3 @@ const businessCart = Cart("business-cart-oop");
 cart.loadFromStorage();
 businessCart.loadFromStorage();
 cart.addToCart("54e0eccd-8f36-462b-b68a-8182611d9add", 4);
-console.log(businessCart);
-console.log(cart);
