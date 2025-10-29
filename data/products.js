@@ -20,6 +20,24 @@ class Product {
   getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
   }
+  extraInfo() {
+    return ``;
+  }
+}
+
+class Clothing extends Product {
+  sizeChartLink;
+  constructor(productDetail) {
+    super(productDetail);
+    this.sizeChartLink = productDetail.sizeChartLink;
+  }
+  extraInfo() {
+    return `
+    <a href="${this.sizeChartLink}" target="_blank" >
+       Size Chart
+    </a>
+    `;
+  }
 }
 
 export const products = [
@@ -494,8 +512,12 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productDetail) => {
+  if (productDetail.type === "clothing") {
+    return new Clothing(productDetail);
+  }
   return new Product(productDetail);
 });
+
 export function getProduct(productId) {
   let matchingProduct;
   products.forEach((product) => {
