@@ -1,4 +1,4 @@
-import { calculateCartItem, cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-calss.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { renderAmazonHeader } from "../amazon/amazon-header.js";
@@ -7,7 +7,7 @@ import { formatCurrency } from "../utils/money.js";
 export function renderPayMentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     const product = getProduct(cartItem.productId);
     productPriceCents += product.priceCents * cartItem.quantity;
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
@@ -22,9 +22,7 @@ export function renderPayMentSummary() {
       </div>
 
       <div class="payment-summary-row">
-        <div>Items (<span class="item-counts" >${calculateCartItem(
-          cart
-        )}</span>):</div>
+        <div>Items (<span class="item-counts" >${cart.calculateCartItem()}</span>):</div>
         <div class="payment-summary-money">$${formatCurrency(
           productPriceCents
         )}</div>
@@ -63,6 +61,5 @@ export function renderPayMentSummary() {
       </button>
 `;
   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
-  // showCalculateCartItem(document.querySelector(".item-counts"), cart);
   renderAmazonHeader();
 }

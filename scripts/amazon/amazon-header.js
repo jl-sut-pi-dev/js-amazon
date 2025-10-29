@@ -1,6 +1,7 @@
-import { calculateCartItem, cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-calss.js";
+
 export function renderAmazonHeader() {
-  const cartItems = calculateCartItem(cart);
+  const cartItems = cart.calculateCartItem();
 
   let html = `
      <div class="amazon-header-left-section">

@@ -1,5 +1,5 @@
+import { cart } from "../data/cart-calss.js";
 import { products } from "../data/products.js";
-import { addToCart } from "../data/cart.js";
 import { renderAmazonHeader } from "./amazon/amazon-header.js";
 
 // const cartQuantityElement = document.querySelector(".js-cart-quantity");
@@ -79,7 +79,8 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
       document.querySelector(`.js-quantity-selector-${productId}`).value
     );
     //add to cart
-    addToCart(productId, quantity);
+    // addToCart(productId, quantity);
+    cart.addToCart(productId, quantity);
     // added message show
     addedMessageFun(productId);
 
