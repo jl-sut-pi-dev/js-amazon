@@ -1,5 +1,3 @@
-// import { calculateCartItem, cart } from "../../data/cart.js";
-
 import { cart } from "../../data/cart-calss.js";
 
 export function renderCheckoutHeader() {
