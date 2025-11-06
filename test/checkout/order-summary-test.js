@@ -1,5 +1,5 @@
 import { cart } from "../../data/cart-calss.js";
-import { loadsProducts, loadProductFetch } from "../../data/products.js";
+import { loadProductFetch } from "../../data/products.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 // integration test (test many units/pieces of code working together)

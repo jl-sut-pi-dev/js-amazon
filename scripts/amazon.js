@@ -1,5 +1,5 @@
 import { cart } from "../data/cart-calss.js";
-import { products, loadsProducts } from "../data/products.js";
+import { products, loadProductFetch } from "../data/products.js";
 import { renderAmazonHeader } from "./amazon/amazon-header.js";
 
 function renderProductGrid() {
@@ -103,4 +103,7 @@ function renderProductGrid() {
     }, 2000);
   }
 }
-loadsProducts(renderProductGrid);
+loadProductFetch().then(() => {
+  renderProductGrid();
+});
+console.log("amazon");
