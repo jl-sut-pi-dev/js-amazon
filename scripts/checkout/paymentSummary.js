@@ -8,15 +8,18 @@ import { formatCurrency } from "../utils/money.js";
 export function renderPayMentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
+
   cart.cartItems.forEach((cartItem) => {
     const product = getProduct(cartItem.productId);
     productPriceCents += product.priceCents * cartItem.quantity;
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
     shippingPriceCents += deliveryOption.priceCents;
   });
+
   const totalBeforeTax = productPriceCents + shippingPriceCents;
   const taxCents = totalBeforeTax * 0.1;
   const totalCents = totalBeforeTax + taxCents;
+
   let paymentSummaryHTML = `
       <div class="payment-summary-title">
         Order Summary
@@ -61,8 +64,10 @@ export function renderPayMentSummary() {
         Place your order
       </button>
 `;
+
   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
   renderAmazonHeader();
+
   document
     .querySelector(".js-place-order")
     .addEventListener("click", async () => {
@@ -74,6 +79,11 @@ export function renderPayMentSummary() {
         body: JSON.stringify({ cart: cart }),
       });
       const order = await response.json();
+      if (order) {
+        cart.cartItems = [];
+        localStorage.removeItem("cart-oop");
+      }
       addOrder(order);
+      window.location.href = "orders.html";
     });
 }

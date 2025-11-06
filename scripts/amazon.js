@@ -106,4 +106,3 @@ function renderProductGrid() {
 loadProductFetch().then(() => {
   renderProductGrid();
 });
-console.log("amazon");

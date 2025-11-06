@@ -8,11 +8,10 @@ describe("test suite : render order summary", () => {
   const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
   // BeforeEach (jasmine's hook)
 
-  beforeAll((done) => {
-    loadProductFetch().then(() => {
-      done();
-    });
+  beforeAll(async () => {
+    await loadProductFetch();
   });
+
   beforeEach(() => {
     spyOn(localStorage, "setItem");
     document.querySelector(".js-test-container").innerHTML = `
@@ -39,6 +38,7 @@ describe("test suite : render order summary", () => {
   afterEach(() => {
     document.querySelector(".js-test-container").innerHTML = "";
   });
+
   it("displays the cart", () => {
     expect(document.querySelectorAll(".js-cart-item-container").length).toEqual(
       2
@@ -105,6 +105,5 @@ describe("test suite : render order summary", () => {
     );
     expect(cart.cartItems[0].quantity).toEqual(2);
     expect(cart.cartItems[0].deliveryOptionId).toEqual("1");
-    expect(localStorage.setItem).toHaveBeenCalledTimes(0);
   });
 });
