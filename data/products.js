@@ -70,20 +70,13 @@ export function loadProductFetch() {
         }
         return new Product(productDetail);
       });
+    })
+    .catch(() => {
+      console.log("error form loadProductFetch");
     });
 
   return promise;
 }
-/*
-export function loadsProducts(renderHtml) {
-  const xhr = new XMLHttpRequest();
-  xhr.addEventListener("load", () => {
-    renderHtml();
-  });
-  xhr.open("GET", "https://supersimplebackend.dev/products");
-  xhr.send();
-}
-*/
 
 export function getProduct(productId) {
   let matchingProduct;
