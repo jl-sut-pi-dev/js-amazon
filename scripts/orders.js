@@ -62,7 +62,7 @@ loadProductFetch().then(() => {
           </div>
 
           <div class="product-actions">
-            <a href="tracking.html?productId${product.id}&orderId=${order.id}">
+            <a href="tracking.html?productId=${product.id}&orderId=${order.id}">
               <button class="track-package-button button-secondary">
                 Track package
               </button>
