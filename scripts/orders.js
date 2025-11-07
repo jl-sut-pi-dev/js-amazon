@@ -1,3 +1,4 @@
+import { cart } from "../data/cart-calss.js";
 import { orders } from "../data/orders.js";
 import { getProduct, loadProductFetch } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -54,7 +55,7 @@ loadProductFetch().then(() => {
             </div>
             <div class="product-delivery-date">Arriving on:${deliveryDate}</div>
             <div class="product-quantity">Quantity: ${productDetail.quantity}</div>
-            <button class="buy-again-button button-primary">
+            <button class="buy-again-button button-primary  js-buy-it-again" data-product-id=${product.id}>
               <img class="buy-again-icon" src="../images/icons/buy-again.png" />
               <span class="buy-again-message">Buy it again</span>
             </button>
@@ -70,6 +71,20 @@ loadProductFetch().then(() => {
       </div>
 `;
     });
+
     return orderDetails;
   }
+  document.querySelectorAll(".js-buy-it-again").forEach((button) => {
+    button.addEventListener("click", () => {
+      const { productId } = button.dataset;
+      cart.addToCart(productId, 1);
+      button.innerHTML = "Added";
+      setTimeout(() => {
+        button.innerHTML = `
+         <img class="buy-again-icon" src="../images/icons/buy-again.png" />
+         <span class="buy-again-message">Buy it again</span>
+         `;
+      }, 1000);
+    });
+  });
 });
