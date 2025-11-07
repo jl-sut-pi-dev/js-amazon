@@ -32,17 +32,20 @@ export function calculateDeliveryDate(deliveryOption) {
   return newDeliveryDay;
 }
 
-export function getDeliveryWeekday(deliveryOption) {
-  let remainingDays = deliveryOption.deliveryDays;
+export function getDeliveryWeekday(
+  // deliveryOption
+  deliveryDays
+) {
+  // let remainingDays = deliveryOption.deliveryDays;
   let deliveryDate = dayjs();
 
-  while (remainingDays > 0) {
+  while (deliveryDays > 0) {
     deliveryDate = deliveryDate.add(1, "day");
     const weekday = deliveryDate.format("dddd");
 
     // Only count weekdays (Mon–Fri)
     if (weekday !== "Saturday" && weekday !== "Sunday") {
-      remainingDays--;
+      deliveryDays--;
     }
   }
 

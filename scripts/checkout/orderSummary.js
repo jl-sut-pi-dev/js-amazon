@@ -131,7 +131,7 @@ export function renderOrderSummary() {
   function deliveryOptionHtml(matchingProduct, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
-      const dateString = getDeliveryWeekday(deliveryOption);
+      const dateString = getDeliveryWeekday(deliveryOption.deliveryDays);
 
       const priceString =
         deliveryOption.priceCents === 0
