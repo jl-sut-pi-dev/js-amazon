@@ -71,19 +71,25 @@ export function renderPayMentSummary() {
   document
     .querySelector(".js-place-order")
     .addEventListener("click", async () => {
-      const response = await fetch("https://supersimplebackend.dev/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cart: cart }),
-      });
-      const order = await response.json();
-      if (order) {
-        cart.cartItems = [];
-        localStorage.removeItem("cart-oop");
+      try {
+        const response = await fetch("https://supersimplebackend.dev/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cart: cart }),
+        });
+        const order = await response.json();
+        if (order.errorMessage) {
+          throw error;
+        }
+        if (order) {
+          cart.resetCart();
+        }
+        addOrder(order);
+        window.location.href = "orders.html";
+      } catch (error) {
+        console.log("error", error);
       }
-      addOrder(order);
-      window.location.href = "orders.html";
     });
 }

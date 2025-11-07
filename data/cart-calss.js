@@ -80,6 +80,10 @@ class Cart {
     filteredCart.deliveryOptionId = deliveryOptionId;
     this.saveToLocalStorage();
   }
+  resetCart() {
+    cart.cartItems = [];
+    this.saveToLocalStorage();
+  }
 }
 
 export const cart = new Cart("cart-oop");

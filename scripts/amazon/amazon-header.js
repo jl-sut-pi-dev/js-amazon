@@ -15,9 +15,9 @@ export function renderAmazonHeader() {
       </div>
 
       <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search" />
+        <input class="search-bar js-input-search" type="text" placeholder="Search" />
 
-        <button class="search-button">
+        <button class="search-button js-search-button">
           <img class="search-icon" src="images/icons/search-icon.png" />
         </button>
       </div>
@@ -37,5 +37,20 @@ export function renderAmazonHeader() {
   `;
   if (document.querySelector(".js-amazon-header")) {
     document.querySelector(".js-amazon-header").innerHTML = html;
+  }
+  const input = document.querySelector(".js-input-search");
+  if (input) {
+    input.onkeydown = (event) => {
+      if (event.key === "Enter") {
+        const search = input.value;
+        window.location.href = `amazon.html?search=${search}`;
+      }
+    };
+    document
+      .querySelector(".js-search-button")
+      .addEventListener("click", () => {
+        const search = input.value;
+        window.location.href = `amazon.html?search=${search}`;
+      });
   }
 }

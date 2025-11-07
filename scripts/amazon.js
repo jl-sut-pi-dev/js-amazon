@@ -10,7 +10,16 @@ function renderProductGrid() {
   // showCalculateCartItem(cartQuantityElement, cart);
   renderAmazonHeader();
 
-  products.forEach((product) => {
+  const url = new URL(window.location.href);
+  const search = url.searchParams.get("search");
+  let filterProducts = products;
+  if (search) {
+    filterProducts = filterProducts.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  filterProducts.forEach((product) => {
     productsHtml += `
         <div class="product-container">
           <div class="product-image-container">

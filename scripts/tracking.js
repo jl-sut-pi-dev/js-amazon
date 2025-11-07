@@ -38,6 +38,10 @@ async function LoadTrackingPage() {
   const percentage =
     (today.diff(orderTime) / deliveryTime.diff(orderTime)) * 100;
   const progress = Math.min(Math.max(percentage, 0), 100);
+
+  const deliveredMessage =
+    today < deliveryTime ? "Arriving on" : "Delivered on";
+
   document.querySelector(".js-tacking-order");
   document.querySelector(
     ".js-order-tracking"
@@ -45,7 +49,7 @@ async function LoadTrackingPage() {
           View all orders
         </a>
 
-        <div class="delivery-date">Arriving on ${date}</div>
+        <div class="delivery-date">${deliveredMessage} ${date}</div>
 
         <div class="product-info">
          ${product.name}
