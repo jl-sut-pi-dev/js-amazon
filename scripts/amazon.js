@@ -112,6 +112,9 @@ function renderProductGrid() {
     }, 2000);
   }
 }
-loadProductFetch().then(() => {
+
+async function loadAmazonPage() {
+  await loadProductFetch();
   renderProductGrid();
-});
+}
+loadAmazonPage();

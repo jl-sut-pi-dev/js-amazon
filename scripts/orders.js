@@ -4,11 +4,13 @@ import { getProduct, loadProductFetch } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
-loadProductFetch().then(() => {
+async function loadOrderPage() {
+  await loadProductFetch();
   let orderHtml = "";
 
   orders.forEach((order) => {
     const orderDate = dayjs(order.orderTime).format("MMMM D");
+
     orderHtml += `
       <div class="order-container">
         <div class="order-header">
@@ -45,30 +47,30 @@ loadProductFetch().then(() => {
       );
 
       orderDetails += `
-      <div class="order-details-grid">
-          <div class="product-image-container">
-            <img src="${product.image}" />
-          </div>
-          <div class="product-details">
-            <div class="product-name">
-              ${product.name}
-            </div>
-            <div class="product-delivery-date">Arriving on:${deliveryDate}</div>
-            <div class="product-quantity">Quantity: ${productDetail.quantity}</div>
-            <button class="buy-again-button button-primary  js-buy-it-again" data-product-id=${product.id}>
-              <img class="buy-again-icon" src="../images/icons/buy-again.png" />
-              <span class="buy-again-message">Buy it again</span>
-            </button>
-          </div>
-
-          <div class="product-actions">
-            <a href="tracking.html?productId=${product.id}&orderId=${order.id}">
-              <button class="track-package-button button-secondary">
-                Track package
-              </button>
-            </a>
-          </div>
+  <div class="order-details-grid">
+      <div class="product-image-container">
+        <img src="${product.image}" />
       </div>
+      <div class="product-details">
+        <div class="product-name">
+          ${product.name}
+        </div>
+        <div class="product-delivery-date">Arriving on:${deliveryDate}</div>
+        <div class="product-quantity">Quantity: ${productDetail.quantity}</div>
+        <button class="buy-again-button button-primary  js-buy-it-again" data-product-id=${product.id}>
+          <img class="buy-again-icon" src="../images/icons/buy-again.png" />
+          <span class="buy-again-message">Buy it again</span>
+        </button>
+      </div>
+
+      <div class="product-actions">
+        <a href="tracking.html?productId=${product.id}&orderId=${order.id}">
+          <button class="track-package-button button-secondary">
+            Track package
+          </button>
+        </a>
+      </div>
+  </div>
 `;
     });
 
@@ -77,8 +79,10 @@ loadProductFetch().then(() => {
   document.querySelectorAll(".js-buy-it-again").forEach((button) => {
     button.addEventListener("click", () => {
       const { productId } = button.dataset;
+
       cart.addToCart(productId, 1);
       button.innerHTML = "Added";
+
       setTimeout(() => {
         button.innerHTML = `
          <img class="buy-again-icon" src="../images/icons/buy-again.png" />
@@ -87,4 +91,5 @@ loadProductFetch().then(() => {
       }, 1000);
     });
   });
-});
+}
+loadOrderPage();

@@ -12,5 +12,10 @@ async function runderChecnout() {
   renderCheckoutHeader();
   renderOrderSummary();
   renderPayMentSummary();
+
+  // handle modal close button
+  document.querySelector(".close-btn").addEventListener("click", () => {
+    document.querySelector(".js-modal-container").style.display = "none";
+  });
 }
 runderChecnout();

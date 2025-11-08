@@ -7,6 +7,7 @@
       (Responsive design = make the website look good on
       smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
 
     <!-- Load a font called Roboto from Google Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="styles/shared/general.css" />
     <link rel="stylesheet" href="styles/pages/checkout/checkout-header.css" />
     <link rel="stylesheet" href="styles/pages/checkout/checkout.css" />
+    <link rel="stylesheet" href="./styles/pages/checkout/modal.css" />
   </head>
   <body>
     <div class="checkout-header js-checkout-header"></div>
@@ -31,6 +33,17 @@
         <div class="order-summary js-order-summary"></div>
 
         <div class="payment-summary js-payment-summary"></div>
+      </div>
+
+      <div class="modal-container js-modal-container">
+        <div class="modal">
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Your cart is empty...</h3>
+          <div class="modal-content">
+            <p>please add some products</p>
+          </div>
+          <a href="amazon.html" class="button-primary">Browse products</a>
+        </div>
       </div>
     </div>
 

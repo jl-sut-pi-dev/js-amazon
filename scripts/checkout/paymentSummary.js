@@ -4,6 +4,7 @@ import { addOrder } from "../../data/orders.js";
 import { getProduct } from "../../data/products.js";
 import { renderAmazonHeader } from "../amazon/amazon-header.js";
 import { formatCurrency } from "../utils/money.js";
+import { placeOrderBtnClick } from "./place-order-button.js";
 
 export function renderPayMentSummary() {
   let productPriceCents = 0;
@@ -70,26 +71,5 @@ export function renderPayMentSummary() {
 
   document
     .querySelector(".js-place-order")
-    .addEventListener("click", async () => {
-      try {
-        const response = await fetch("https://supersimplebackend.dev/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ cart: cart }),
-        });
-        const order = await response.json();
-        if (order.errorMessage) {
-          throw error;
-        }
-        if (order) {
-          cart.resetCart();
-        }
-        addOrder(order);
-        window.location.href = "orders.html";
-      } catch (error) {
-        console.log("error", error);
-      }
-    });
+    .addEventListener("click", placeOrderBtnClick);
 }
