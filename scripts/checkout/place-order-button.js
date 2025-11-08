@@ -6,6 +6,23 @@ export async function placeOrderBtnClick() {
   if (cart.cartItems.length === 0) {
     // runder modal box
     document.querySelector(".js-modal-container").style.display = "block";
+
+    document.querySelector(".js-modal").innerHTML = `
+   
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Your cart is empty...</h3>
+          <div class="modal-content js-modal-content">
+            <p>please add some products</p>
+          </div>
+          <div class="js-modal-buttons">
+            <a href="amazon.html" class="button-primary">Browse products</a>
+          </div>
+      
+        `;
+    // handle modal close button
+    document.querySelector(".close-btn").addEventListener("click", () => {
+      document.querySelector(".js-modal-container").style.display = "none";
+    });
     return;
   }
 

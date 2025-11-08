@@ -10,6 +10,7 @@ import {
 import { renderPayMentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout-header.js";
 import { cart } from "../../data/cart-calss.js";
+import { deleteProductHandler } from "./delete-product.js";
 
 export function renderOrderSummary() {
   let htmlStr = `
@@ -72,6 +73,7 @@ export function renderOrderSummary() {
             </div>
           </div>
 
+
           <div class="delivery-options">
             <div class="delivery-options-title">
               Choose a delivery option:
@@ -89,11 +91,7 @@ export function renderOrderSummary() {
     .querySelectorAll(".js-delete-quantity-link")
     .forEach((deleteLink) => {
       deleteLink.addEventListener("click", () => {
-        const { productId } = deleteLink.dataset;
-        cart.deleteFromCart(productId);
-        renderCheckoutHeader();
-        renderOrderSummary();
-        renderPayMentSummary();
+        deleteProductHandler(deleteLink);
       });
     });
 
