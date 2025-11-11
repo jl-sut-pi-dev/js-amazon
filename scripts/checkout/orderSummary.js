@@ -2,15 +2,14 @@ import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 
 import {
-  calculateDeliveryDate,
   deliveryOptions,
   getDeliveryOption,
-  getDeliveryWeekday,
 } from "../../data/deliveryOptions.js";
 import { renderPayMentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout-header.js";
 import { cart } from "../../data/cart-calss.js";
 import { deleteProductHandler } from "./delete-product.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 export function renderOrderSummary() {
   let htmlStr = `
@@ -23,8 +22,9 @@ export function renderOrderSummary() {
 
     const { deliveryOptionId } = cartItem;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-    const dateString = calculateDeliveryDate(deliveryOption);
-
+    const dateString = dayjs()
+      .add(deliveryOption.deliveryDays, "day")
+      .format("MMMM D");
     htmlStr += `
    <div class="cart-item-container js-cart-item-container js-cart-item-container-${
      cartItemProduct.id
@@ -106,6 +106,8 @@ export function renderOrderSummary() {
           .classList.add("is-editing-quantity");
       });
     });
+
+  // update qunatity link
   document
     .querySelectorAll(".js-save-quantity-link")
     .forEach((saveQuantityLink) => {
@@ -118,6 +120,11 @@ export function renderOrderSummary() {
         const inputValue = Number(
           document.querySelector(`.js-quantity-input-${productId}`).value
         );
+        if (inputValue < 0 || !inputValue) {
+          console.log(inputValue);
+          document.querySelector(`.js-quantity-input-${productId}`).value = "";
+          return;
+        }
 
         cart.updateCartQuantity(productId, inputValue);
         renderCheckoutHeader();
@@ -128,8 +135,11 @@ export function renderOrderSummary() {
 
   function deliveryOptionHtml(matchingProduct, cartItem) {
     let html = "";
+
     deliveryOptions.forEach((deliveryOption) => {
-      const dateString = getDeliveryWeekday(deliveryOption.deliveryDays);
+      const dateString = dayjs()
+        .add(deliveryOption.deliveryDays, "day")
+        .format("MMMM D");
 
       const priceString =
         deliveryOption.priceCents === 0
@@ -137,12 +147,15 @@ export function renderOrderSummary() {
           : ` $${formatCurrency(deliveryOption.priceCents)} -`;
 
       const isCheked = deliveryOption.id === cartItem.deliveryOptionId;
+
       html += `
-    <div data-product-id=${matchingProduct.id} data-delivery-option-id=${
-        deliveryOption.id
-      } class="delivery-option js-delivery-option js-delivery-option-${
+    <div 
+      data-product-id=${matchingProduct.id} 
+      data-delivery-option-id=${deliveryOption.id}
+      class="delivery-option js-delivery-option js-delivery-option-${
         matchingProduct.id
-      }-${deliveryOption.id}">
+      }-${deliveryOption.id}"
+      >
       <input
       type="radio"
       ${isCheked ? "checked" : ""}

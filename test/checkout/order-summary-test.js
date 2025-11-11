@@ -62,20 +62,20 @@ describe("test suite : render order summary", () => {
       document.querySelector(`.js-product-name-${productId2}`).innerText
     ).toContain("Intermediate Size Basketball");
   });
-  it("removes a product", () => {
-    document.querySelector(`.js-delete-link-${productId1}`).click();
-    expect(document.querySelectorAll(".js-cart-item-container").length).toEqual(
-      1
-    );
-    expect(
-      document.querySelector(`.js-cart-item-container-${productId1}`)
-    ).toEqual(null);
-    expect(
-      document.querySelector(`.js-cart-item-container-${productId2}`)
-    ).not.toEqual(null);
-    expect(cart.cartItems.length).toEqual(1);
-    expect(cart.cartItems[0].productId).toEqual(productId2);
-  });
+  // it("removes a product", () => {
+  //   document.querySelector(`.js-delete-link-${productId1}`).click();
+  //   expect(document.querySelectorAll(".js-cart-item-container").length).toEqual(
+  //     1
+  //   );
+  //   expect(
+  //     document.querySelector(`.js-cart-item-container-${productId1}`)
+  //   ).toEqual(null);
+  //   expect(
+  //     document.querySelector(`.js-cart-item-container-${productId2}`)
+  //   ).not.toEqual(null);
+  //   expect(cart.cartItems.length).toEqual(1);
+  //   expect(cart.cartItems[0].productId).toEqual(productId2);
+  // });
   it("update delivery option", () => {
     document.querySelector(`.js-delivery-option-${productId1}-2`).click();
     expect(

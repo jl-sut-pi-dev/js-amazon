@@ -1,5 +1,5 @@
 import { cart } from "../data/cart-calss.js";
-import { orders } from "../data/orders.js";
+import { cancelOrder, orders } from "../data/orders.js";
 import { getProduct, loadProductFetch } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
@@ -7,6 +7,7 @@ import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 async function loadOrderPage() {
   await loadProductFetch();
   let orderHtml = "";
+  console.log(orders);
 
   orders.forEach((order) => {
     const orderDate = dayjs(order.orderTime).format("MMMM D");
@@ -69,6 +70,9 @@ async function loadOrderPage() {
             Track package
           </button>
         </a>
+        <button class="track-package-button cancel-order js-cancel-order" data-order-id=${order.id}>
+            Cancel order
+        </button>
       </div>
   </div>
 `;
@@ -89,6 +93,41 @@ async function loadOrderPage() {
          <span class="buy-again-message">Buy it again</span>
          `;
       }, 1000);
+    });
+  });
+  document.querySelectorAll(".js-cancel-order").forEach((button) => {
+    button.addEventListener("click", () => {
+      const { orderId } = button.dataset;
+      if (orderId) {
+        const modalContainer = document.querySelector(".js-modal-container");
+        modalContainer.style.display = "block";
+        document.querySelector(".js-modal").innerHTML = `
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">You are about to cancel the order</h3>
+          <div class="modal-content js-modal-content">
+          This will cancel your order <br>Are You Sure
+          </div>
+          <div class="js-modal-buttons">
+            <button class="button-secondary button-outline js-button-cancel">No</button>
+            <button class="button-delete js-button-cancel-order">Yes</button>
+          </div>
+        `;
+        document
+          .querySelector(".js-button-cancel-order")
+          .addEventListener("click", () => {
+            cancelOrder(orderId);
+            loadOrderPage();
+            modalContainer.style.display = "none";
+          });
+        document
+          .querySelector(".js-button-cancel")
+          .addEventListener("click", () => {
+            modalContainer.style.display = "none";
+          });
+        document.querySelector(".close-btn").addEventListener("click", () => {
+          modalContainer.style.display = "none";
+        });
+      }
     });
   });
 }

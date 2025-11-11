@@ -16,7 +16,7 @@ export function deleteProductHandler(deleteLink) {
           </div>
           <div class="js-modal-buttons">
             <button class="button-secondary button-outline js-button-cancel">Cancel</button>
-            <button data-product-id=${productId} class="button-delete js-button-delete-product">Delete</button>
+            <button class="button-delete js-button-delete-product">Delete</button>
           </div>
         `;
 

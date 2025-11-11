@@ -1,6 +1,5 @@
 import { cart } from "../../data/cart-calss.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
-import { addOrder } from "../../data/orders.js";
 import { getProduct } from "../../data/products.js";
 import { renderAmazonHeader } from "../amazon/amazon-header.js";
 import { formatCurrency } from "../utils/money.js";

@@ -1,7 +1,4 @@
-import {
-  getDeliveryOption,
-  getDeliveryWeekday,
-} from "../data/deliveryOptions.js";
+import { getDeliveryWeekday } from "../data/deliveryOptions.js";
 import { getOrder } from "../data/orders.js";
 import { getProduct, loadProductFetch, products } from "../data/products.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";

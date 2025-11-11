@@ -26,6 +26,8 @@ export function getDeliveryOption(deliveryOptionId) {
   });
   return deliveryOption || deliveryOption[0];
 }
+
+/*
 export function calculateDeliveryDate(deliveryOption) {
   const newDeliveryDay = getDeliveryWeekday(deliveryOption);
 
@@ -51,6 +53,8 @@ export function getDeliveryWeekday(
 
   return deliveryDate.format("dddd, MMMM D");
 }
+*/
+
 export function validDeliveryOption(deliveryOptionId) {
   let found = false;
   deliveryOptions.forEach((deliveryOption) => {

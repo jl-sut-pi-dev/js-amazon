@@ -160,6 +160,13 @@
   font-size: 15px;
   padding: 8px;
 }
+.cancel-order {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+}
 
 @media (max-width: 800px) {
   .buy-again-button {
